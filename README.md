@@ -1,29 +1,115 @@
 # cube-vue-image-lazy
 
-## Project setup
+A super simple image lazy loader for Vue.
+
+## Install
+
+```sh
+yarn add cube-vue-image-lazy
 ```
+
+_**Warning**: You'll need to install the [w3c Intersection Observer polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill) in case you're targeting a browser which doesn't support it._
+
+## Usage
+
+You can register the component globally so it's available in all your apps:
+
+```javascript
+import Vue from 'vue'
+import ImageLazy from 'cube-vue-image-lazy'
+
+Vue.use(ImageLazy)
+
+// You can override defaults
+Vue.use(ImageLazy, {
+  name: 'ImageLazyLoad',
+  delay: 500,
+  baseClass: 'image-lazy-load',
+  hiddenClass: 'image-lazy-load-hidden'
+})
+```
+
+Or use it locally in any of your components:
+
+```html
+<template>
+  <div id="App">
+    <ImageLazy
+      src="https://source.unsplash.com/random/200x200"
+      srcset="https://source.unsplash.com/random/400x400 2x"
+      :delay="500"
+      class="photo"
+      baseClass="image-lazy"
+      hiddenClass="image-lazy-hidden"
+      @loading="loading = true"
+      @load="loaded = true"
+    />
+  </div>
+</template>
+
+<script>
+import ImageLazy from 'cube-vue-image-lazy'
+
+export default {
+  components: {
+    ImageLazy
+  },
+  data () {
+    return {
+      loading: false,
+      loaded: false
+    }
+  }
+}
+</script>
+
+<style>
+.image-lazy {
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+.image-lazy-hidden {
+  opacity: 0;
+}
+</style>
+```
+
+## Props
+
+| Name        | Required | Type   | Default              | Description |
+| ---         | ---      | ---    | ---                  | ---         |
+| delay       | false    | Number | 0                    | The delay before loading the image when it appears in the viewport. |
+| baseClass   | false    | String | 'image-lazy'         | The name of the class always added to the image. |
+| hiddenClass | false    | String | 'image-lazy-hidden'  | The name of the class added while the image is not loaded. |
+
+## Events
+
+| Name    | Description |
+| ---     | ---         |
+| loading | The image is loading. |
+| load    | The image is loaded. |
+
+## Development Setup
+
+```sh
+# Project setup
 yarn install
-```
 
-### Compiles and hot-reloads for development
-```
+# Compiles and hot-reloads for development – Run the demo
 yarn serve
-```
 
-### Compiles and minifies for production
-```
+# Compiles and minifies for production
 yarn build
-```
 
-### Run your unit tests
-```
+# Builds the npm ready packages
+yarn bundle
+
+# Watches for file changes and builds the npm ready packages accordingly
+yarn watch
+
+# Lints and fixes files
+yarn lint
+
+# Run the unit tests
 yarn test:unit
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

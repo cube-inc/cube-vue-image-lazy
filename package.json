@@ -1,26 +1,58 @@
 {
   "name": "cube-vue-image-lazy",
   "version": "0.1.0",
-  "private": true,
+  "description": "A super simple image lazy loader for Vue.",
+  "author": "Fred Gomez <fred@cube.rentals>",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cube-inc/cube-vue-image-lazy.git"
+  },
+  "keywords": [
+    "vue",
+    "image",
+    "lazy"
+  ],
+  "main": "dist/cube-vue-image-lazy.umd.js",
+  "module": "dist/cube-vue-image-lazy.esm.js",
+  "unpkg": "dist/cube-vue-image-lazy.min.js",
+  "files": [
+    "dist",
+    "src/components/ImageLazy.vue"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "bundle": "yarn bundle:umd & yarn bundle:es & yarn bundle:unpkg",
+    "bundle:umd": "rollup --config rollup.config.js --format umd --file dist/cube-vue-image-lazy.umd.js",
+    "bundle:es": "rollup --config rollup.config.js --format es --file dist/cube-vue-image-lazy.esm.js",
+    "bundle:unpkg": "rollup --config rollup.config.js --format iife --file dist/cube-vue-image-lazy.min.js",
+    "watch": "yarn bundle:umd --watch & yarn bundle:es --watch & yarn bundle:unpkg --watch",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prepublishOnly": "yarn bundle"
   },
-  "dependencies": {
-    "core-js": "^3.4.4",
-    "vue": "^2.6.10"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-unit-jest": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
+    "@vue/eslint-config-standard": "^3.0.5",
     "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^23.0.1",
+    "core-js": "^3.6.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-vue": "^5.1.4",
+    "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   }
 }
