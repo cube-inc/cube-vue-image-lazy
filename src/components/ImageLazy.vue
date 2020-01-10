@@ -3,6 +3,11 @@
 </template>
 
 <script>
+
+const STATE_DEFERRED = 'deferred'
+const STATE_LOADING = 'loading'
+const STATE_LOADED = 'loaded'
+
 export default {
   name: 'ImageLazy',
   props: {
@@ -10,11 +15,13 @@ export default {
     srcset: { type: String, default: null },
     delay: { type: Number, default: 0 },
     baseClass: { type: String, default: 'image-lazy' },
-    hiddenClass: { type: String, default: 'image-lazy-hidden' }
+    deferredClass: { type: String, default: 'image-lazy-deferred' },
+    loadingClass: { type: String, default: 'image-lazy-loading' },
+    loadedClass: { type: String, default: 'image-lazy-loaded' }
   },
   data () {
     return {
-      loaded: false
+      state: STATE_DEFERRED
     }
   },
   computed: {
@@ -23,8 +30,14 @@ export default {
       if (this.baseClass) {
         classes.push(this.baseClass)
       }
-      if (!this.loaded) {
-        classes.push(this.hiddenClass)
+      if (this.state === STATE_DEFERRED && this.deferredClass) {
+        classes.push(this.deferredClass)
+      }
+      if (this.state === STATE_LOADING && this.loadingClass) {
+        classes.push(this.loadingClass)
+      }
+      if (this.state === STATE_LOADED && this.loadedClass) {
+        classes.push(this.loadedClass)
       }
       return classes
     }
@@ -52,16 +65,19 @@ export default {
     },
     load () {
       this.$emit('loading')
-      const img = this.$refs.img
-      setTimeout(() => {
-        img.src = this.src
-        if (this.srcset) {
-          img.srcset = this.srcset
-        }
-      }, this.delay)
+      this.state = STATE_LOADING
+      this.$nextTick(() => {
+        const img = this.$refs.img
+        setTimeout(() => {
+          img.src = this.src
+          if (this.srcset) {
+            img.srcset = this.srcset
+          }
+        }, this.delay)
+      })
     },
     onLoad () {
-      this.loaded = true
+      this.state = STATE_LOADED
       this.$emit('load')
     }
   },

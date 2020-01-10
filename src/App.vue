@@ -14,10 +14,10 @@
       </p>
     </section>
     <section class="section demo scroll-snap-center">
-      <ImageLazy src="/images/animated-logos.gif" class="logo" :delay="1000" @loading="loading = true" @load="loaded = true" />
+      <ImageLazy src="/images/animated-logos.gif" class="logo" @loading="loading = true" @load="loaded = true" />
     </section>
     <section class="section photos scroll-snap-center">
-      <ImageLazy v-for="(photo, index) in photos" :key="photo" :src="photo" :delay="index * 500" class="photo" />
+      <ImageLazy v-for="(photo, index) in photos" :key="photo" :src="photo" :delay="index * 100" class="photo" />
     </section>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   },
   created () {
     for (let i = 0 ; i < 50; i++) {
-      this.photos.push(`https://source.unsplash.com/random/200x200?${i}`)
+      this.photos.push(`https://source.unsplash.com/random/200x200`)
     }
   }
 }
@@ -92,17 +92,18 @@ body {
   padding: 60px 0;
 }
 .header h1 {
-  font-size: 3em;
+  font-size: 2em;
 }
 .header h1 small {
   display: block;
+  font-size: 60%;
   font-weight: normal;
 }
 .lead {
   font-size: 120%;
 }
 .instruction {
-  margin-top: 25vh;
+  margin-top: 20vh;
 }
 .demo {
   display: flex;
@@ -114,13 +115,13 @@ body {
   width: 100%;
   max-width: 600px;
 }
-.logo.image-lazy-hidden {
-  transform: rotate(360deg);
-}
 .photos {
+  padding: 2em 0;
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fill, 100px);
   grid-auto-rows: 100px;
+  grid-gap: 2px;
   justify-content: center;
   align-items: center;
   background-color: var(--bg-color-alt);
@@ -130,11 +131,19 @@ body {
   height: 100px;
   object-fit: cover;
 }
+
 .image-lazy {
+  opacity: 0;
+}
+.image-lazy-loading.photo {
+  transform: translateX(100vh);
+}
+.image-lazy-loading.logo {
+  transform: rotate(360deg);
+}
+.image-lazy-loaded {
   transition: all 1s ease;
   opacity: 1;
 }
-.image-lazy-hidden {
-  opacity: 0;
-}
+
 </style>
