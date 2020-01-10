@@ -1,10 +1,5 @@
 import component from './components/ImageLazy.vue'
 
-function install (Vue, options = {}) {
-  applyOptions(options)
-  registerComponent(Vue, options)
-}
-
 function applyOptions (options) {
   const componentPropNames = Object.keys(component.props)
   Object.entries(options)
@@ -21,6 +16,9 @@ function registerComponent (Vue, options) {
   Vue.component(name, component)
 }
 
-component.install = install
+component.install = (Vue, options = {}) => {
+  applyOptions(options)
+  registerComponent(Vue, options)
+}
 
 export default component
