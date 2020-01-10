@@ -1,6 +1,6 @@
 {
   "name": "cube-vue-image-lazy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A super simple image lazy loader for Vue.",
   "author": "Fred Gomez <fred@cube.rentals>",
   "license": "MIT",
