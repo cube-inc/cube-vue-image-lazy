@@ -25,8 +25,8 @@ Vue.use(ImageLazy, {
   name: 'ImageLazyLoad',
   delay: 500,
   baseClass: 'image-lazy-load',
-  deferredClass: 'image-lazy-load-deferred'
-  loadingClass: 'image-lazy-load-loading'
+  deferredClass: 'image-lazy-load-deferred',
+  loadingClass: 'image-lazy-load-loading',
   loadedClass: 'image-lazy-load-loaded'
 })
 ```
