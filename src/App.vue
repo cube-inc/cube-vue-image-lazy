@@ -6,18 +6,37 @@
         <small>v{{ version }}</small>
       </h1>
       <p class="lead">{{ description }}</p>
-      <p v-if="loaded" class="instruction">The logo is loaded! 👍</p>
-      <p v-else-if="loading" class="instruction">The logo is currently loading…</p>
+      <p v-if="loaded" class="instruction">The image is loaded! 👍</p>
+      <p v-else-if="loading" class="instruction">The image is currently loading…</p>
       <p v-else class="instruction">
-        Scroll down until the logo appears…
+        Scroll down until the image appears…
         <br />⬇︎
       </p>
     </section>
-    <section class="section demo scroll-snap-center">
-      <ImageLazy src="/images/animated-logos.gif" class="logo" @loading="loading = true" @load="loaded = true" />
+    <section class="section section-event scroll-snap-center">
+      <h2>Event demo</h2>
+      <p v-if="loaded">The image is loaded! 👍</p>
+      <p v-else-if="loading">The image is currently loading…</p>
+      <p v-else>The image loading is currently deferred.</p>
+      <ImageLazy
+        src="/images/animated-logos.gif"
+        class="logo"
+        @loading="loading = true"
+        @load="loaded = true"
+      />
     </section>
-    <section class="section photos scroll-snap-center">
-      <ImageLazy v-for="(photo, index) in photos" :key="photo" :src="photo" :delay="index * 100" class="photo" />
+    <section class="section section-photos scroll-snap-center">
+      <h2>Photos demo</h2>
+      <p>Photos are loaded with an incremental short delay.</p>
+      <div class="photos">
+        <ImageLazy
+          v-for="(photo, index) in photos"
+          :key="index"
+          :src="photo"
+          :delay="index * 100"
+          class="photo"
+        />
+      </div>
     </section>
   </div>
 </template>
@@ -42,7 +61,7 @@ export default {
     }
   },
   created () {
-    for (let i = 0 ; i < 50; i++) {
+    for (let i = 0; i < 25; i++) {
       this.photos.push(`https://source.unsplash.com/random/200x200`)
     }
   }
@@ -79,14 +98,13 @@ body {
   overflow: auto;
 }
 .scroll-snap {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
 }
 .scroll-snap-center {
-  /* scroll-snap-stop: always; */
-  scroll-snap-align: center;
+  scroll-snap-align: start;
 }
 .section {
-  height: 100vh;
+  min-height: 100vh;
 }
 .header {
   padding: 60px 0;
@@ -105,8 +123,9 @@ body {
 .instruction {
   margin-top: 20vh;
 }
-.demo {
+.section-event {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--bg-color);
@@ -115,8 +134,12 @@ body {
   width: 100%;
   max-width: 600px;
 }
-.photos {
+.section-photos {
+  color: white;
+  background-color: var(--bg-color-alt);
   padding: 2em 0;
+}
+.photos {
   overflow: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fill, 100px);
@@ -124,7 +147,6 @@ body {
   grid-gap: 2px;
   justify-content: center;
   align-items: center;
-  background-color: var(--bg-color-alt);
 }
 .photo {
   width: 100px;
@@ -145,5 +167,4 @@ body {
   transition: all 1s ease;
   opacity: 1;
 }
-
 </style>
