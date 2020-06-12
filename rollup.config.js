@@ -33,27 +33,21 @@ const output = {
   sourcemap: true
 }
 
-const umd = {
-  format: 'umd',
-  file: pkg.main,
-  ...output
-}
-
 const esm = {
   format: 'esm',
   file: pkg.module,
   ...output
 }
 
-const unpkg = {
-  format: 'iife',
-  file: pkg.unpkg,
+const umd = {
+  format: 'umd',
+  file: pkg.main,
   ...output
 }
 
 export default {
   input: 'src/wrapper.js',
-  output: [umd, esm, unpkg],
+  output: [esm, umd],
   plugins: [
     progress(),
     clear({

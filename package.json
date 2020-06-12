@@ -16,10 +16,6 @@
   ],
   "main": "dist/cube-vue-image-lazy.umd.js",
   "module": "dist/cube-vue-image-lazy.esm.js",
-  "unpkg": "dist/cube-vue-image-lazy.min.js",
-  "browser": {
-    "./sfc": "src/components/ImageLazy.vue"
-  },
   "files": [
     "dist",
     "src/components/ImageLazy.vue"
