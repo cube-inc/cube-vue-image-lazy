@@ -52,51 +52,51 @@ Or use it locally in any of your components:
 </template>
 
 <script>
-import ImageLazy from 'cube-vue-image-lazy'
+  import ImageLazy from 'cube-vue-image-lazy'
 
-export default {
-  components: {
-    ImageLazy
-  },
-  data () {
-    return {
-      loading: false,
-      loaded: false
+  export default {
+    components: {
+      ImageLazy
+    },
+    data() {
+      return {
+        loading: false,
+        loaded: false
+      }
     }
   }
-}
 </script>
 
 <style>
-.image-lazy {
-  opacity: 0;
-}
-.image-lazy-loading {
-  transform: translateX(100vh);
-}
-.image-lazy-loaded {
-  transition: opacity 1s ease;
-  opacity: 1;
-}
+  .image-lazy {
+    opacity: 0;
+  }
+  .image-lazy-loading {
+    transform: translateX(100vh);
+  }
+  .image-lazy-loaded {
+    transition: opacity 1s ease;
+    opacity: 1;
+  }
 </style>
 ```
 
 ## Props
 
-| Name          | Required | Type   | Default               | Description |
-| ---           | ---      | ---    | ---                   | ---         |
-| delay         | false    | Number | 0                     | The delay before loading the image when it appears in the viewport. |
-| baseClass     | false    | String | 'image-lazy'          | The name of the class always added to the image. |
-| deferredClass | false    | String | 'image-lazy-deferred' | The name of the class added while the loading of the image is deferred. |
-| loadingClass  | false    | String | 'image-lazy-loading'  | The name of the class added while the image is loading. |
-| loadedClass   | false    | String | 'image-lazy-loaded'   | The name of the class added when the image is loaded. |
+| Name          | Required | Type   | Default               | Description                                                                                                              |
+| ------------- | -------- | ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| delay         | false    | Number | 0                     | The delay before loading the image when it appears in the viewport. If delay is < 0, it will loads the image Immediately |
+| baseClass     | false    | String | 'image-lazy'          | The name of the class always added to the image.                                                                         |
+| deferredClass | false    | String | 'image-lazy-deferred' | The name of the class added while the loading of the image is deferred.                                                  |
+| loadingClass  | false    | String | 'image-lazy-loading'  | The name of the class added while the image is loading.                                                                  |
+| loadedClass   | false    | String | 'image-lazy-loaded'   | The name of the class added when the image is loaded.                                                                    |
 
 ## Events
 
-| Name    | Description |
-| ---     | ---         |
+| Name    | Description           |
+| ------- | --------------------- |
 | loading | The image is loading. |
-| load    | The image is loaded. |
+| load    | The image is loaded.  |
 
 ## Development Setup
 

@@ -80,8 +80,8 @@ export default {
       this.$emit('load')
     }
   },
-  mounted () {
-    this.observe()
+  mounted() {
+    this.delay < 0 ? this.load() : this.observe()
   },
   beforeDestroy() {
     this.unobserve()
