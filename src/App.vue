@@ -18,24 +18,13 @@
       <p v-if="loaded">The image is loaded! 👍</p>
       <p v-else-if="loading">The image is currently loading…</p>
       <p v-else>The image loading is currently deferred.</p>
-      <ImageLazy
-        src="/images/animated-logos.gif"
-        class="logo"
-        @loading="loading = true"
-        @load="loaded = true"
-      />
+      <ImageLazy src="/images/animated-logos.gif" class="logo" @loading="loading = true" @load="loaded = true" />
     </section>
     <section class="section section-photos scroll-snap-center">
       <h2>Photos demo</h2>
       <p>Photos are loaded with an incremental short delay.</p>
       <div class="photos">
-        <ImageLazy
-          v-for="(photo, index) in photos"
-          :key="index"
-          :src="photo"
-          :delay="index * 100"
-          class="photo"
-        />
+        <ImageLazy v-for="(photo, index) in photos" :key="index" :src="photo" :delay="index * 100" class="photo" />
       </div>
     </section>
   </div>
@@ -49,7 +38,7 @@ export default {
   components: {
     ImageLazy
   },
-  data () {
+  data() {
     const { name, version, description } = this.$root.$options.packageInfo
     return {
       name,
@@ -60,7 +49,7 @@ export default {
       photos: []
     }
   },
-  created () {
+  created() {
     for (let i = 0; i < 25; i++) {
       this.photos.push(`https://source.unsplash.com/random/200x200`)
     }
@@ -83,8 +72,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  font-family: "Helvetica Neue", "Ubuntu", "Roboto", "Noto", "Segoe UI", "Arial",
-    sans-serif;
+  font-family: 'Helvetica Neue', 'Ubuntu', 'Roboto', 'Noto', 'Segoe UI', 'Arial', sans-serif;
   color: var(--brand-primary);
 }
 *,

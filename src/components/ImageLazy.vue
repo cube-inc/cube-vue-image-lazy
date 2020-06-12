@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 const STATE_DEFERRED = 'deferred'
 const STATE_LOADING = 'loading'
 const STATE_LOADED = 'loaded'
@@ -19,13 +18,13 @@ export default {
     loadingClass: { type: String, default: 'image-lazy-loading' },
     loadedClass: { type: String, default: 'image-lazy-loaded' }
   },
-  data () {
+  data() {
     return {
       state: STATE_DEFERRED
     }
   },
   computed: {
-    imageClasses () {
+    imageClasses() {
       const classes = []
       if (this.baseClass) {
         classes.push(this.baseClass)
@@ -43,10 +42,10 @@ export default {
     }
   },
   methods: {
-    observe () {
+    observe() {
       if ('IntersectionObserver' in window) {
-        this.$observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
+        this.$observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
             if (entry.isIntersecting) {
               this.load()
               this.unobserve()
@@ -58,12 +57,12 @@ export default {
         this.load()
       }
     },
-    unobserve () {
+    unobserve() {
       if (this.$observer) {
         this.$observer.unobserve(this.$refs.img)
       }
     },
-    load () {
+    load() {
       this.$emit('loading')
       this.state = STATE_LOADING
       this.$nextTick(() => {
@@ -76,7 +75,7 @@ export default {
         }, this.delay)
       })
     },
-    onLoad () {
+    onLoad() {
       this.state = STATE_LOADED
       this.$emit('load')
     }
@@ -84,7 +83,7 @@ export default {
   mounted () {
     this.observe()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.unobserve()
   }
 }

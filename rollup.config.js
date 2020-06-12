@@ -58,8 +58,8 @@ export default {
     alias({
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: {
-        '@': path.resolve('src'),
-      },
+        '@': path.resolve('src')
+      }
     }),
     vue({
       css: true,
@@ -71,7 +71,8 @@ export default {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       presets: [
         [
-          '@babel/preset-env', {
+          '@babel/preset-env',
+          {
             targets: {
               browsers: esbrowserslist
             }
