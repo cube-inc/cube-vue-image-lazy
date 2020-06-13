@@ -24,7 +24,7 @@
       <h2>Photos demo</h2>
       <p>Photos are loaded with an incremental short delay.</p>
       <div class="photos">
-        <ImageLazy v-for="(photo, index) in photos" :key="index" :src="photo" :delay="index * 100" class="photo" />
+        <ImageLazy v-for="(photo, index) in photos" :key="index" :src="photo" :delay="index * 75 + 1500" class="photo" />
       </div>
     </section>
   </div>
@@ -50,7 +50,7 @@ export default {
     }
   },
   created() {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 50; i++) {
       this.photos.push(`https://source.unsplash.com/random/200x200`)
     }
   }
@@ -122,6 +122,17 @@ body {
   width: 100%;
   max-width: 600px;
 }
+.logo.image-lazy {
+  opacity: 0;
+}
+.logo.image-lazy-loading {
+  transform: rotate(360deg);
+}
+.logo.image-lazy-loaded {
+  transition: all 2s ease;
+  opacity: 1;
+  transform: rotate(0deg);
+}
 .section-photos {
   color: white;
   background-color: var(--bg-color-alt);
@@ -141,18 +152,17 @@ body {
   height: 100px;
   object-fit: cover;
 }
-
-.image-lazy {
+.photo.image-lazy {
   opacity: 0;
 }
-.image-lazy-loading.photo {
-  transform: translateX(100vh);
+.photo.image-lazy-loading {
+  filter: blur(5px);
+  transform: translateY(1rem);
 }
-.image-lazy-loading.logo {
-  transform: rotate(360deg);
-}
-.image-lazy-loaded {
-  transition: all 1s ease;
+.photo.image-lazy-loaded {
+  transition: opacity 2s ease, transform 1s ease, filter 1s ease;
   opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
 }
 </style>

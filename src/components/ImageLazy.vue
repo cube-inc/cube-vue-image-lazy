@@ -3,15 +3,18 @@
 </template>
 
 <script>
-const STATE_DEFERRED = 'deferred'
-const STATE_LOADING = 'loading'
-const STATE_LOADED = 'loaded'
+const State = {
+  DEFERRED: 0,
+  LOADING: 1,
+  LOADED: 2
+}
 
 export default {
   name: 'ImageLazy',
   props: {
     src: { type: String, required: true },
-    srcset: { type: String, default: null },
+    srcset: { type: String, default: '' },
+    eager: { type: Boolean, default: false },
     delay: { type: Number, default: 0 },
     baseClass: { type: String, default: 'image-lazy' },
     deferredClass: { type: String, default: 'image-lazy-deferred' },
@@ -20,23 +23,23 @@ export default {
   },
   data() {
     return {
-      state: STATE_DEFERRED
+      state: State.DEFERRED,
+      delayExpired: false
     }
   },
   computed: {
     imageClasses() {
-      const classes = []
-      if (this.baseClass) {
-        classes.push(this.baseClass)
-      }
-      if (this.state === STATE_DEFERRED && this.deferredClass) {
-        classes.push(this.deferredClass)
-      }
-      if (this.state === STATE_LOADING && this.loadingClass) {
-        classes.push(this.loadingClass)
-      }
-      if (this.state === STATE_LOADED && this.loadedClass) {
-        classes.push(this.loadedClass)
+      const classes = [this.baseClass]
+      switch (this.state) {
+        case State.DEFERRED:
+          classes.push(this.deferredClass)
+          break
+        case State.LOADING:
+          classes.push(this.loadingClass)
+          break
+        case State.LOADED:
+          classes.push(this.delayExpired ? this.loadedClass : this.loadingClass)
+          break
       }
       return classes
     }
@@ -63,25 +66,20 @@ export default {
       }
     },
     load() {
-      this.$emit('loading')
-      this.state = STATE_LOADING
-      this.$nextTick(() => {
-        const img = this.$refs.img
-        setTimeout(() => {
-          img.src = this.src
-          if (this.srcset) {
-            img.srcset = this.srcset
-          }
-        }, this.delay)
+      window.requestAnimationFrame(() => {
+        this.state = State.LOADING
+        this.$emit('loading', this)
+        setTimeout(() => (this.delayExpired = true), this.delay)
+        Object.assign(this.$refs.img, { src: this.src, srcset: this.srcset })
       })
     },
     onLoad() {
-      this.state = STATE_LOADED
-      this.$emit('load')
+      this.state = State.LOADED
+      this.$emit('load', this)
     }
   },
   mounted() {
-    this.delay < 0 ? this.load() : this.observe()
+    this.eager ? this.load() : this.observe()
   },
   beforeDestroy() {
     this.unobserve()
