@@ -16,8 +16,10 @@
   ],
   "main": "dist/cube-vue-image-lazy.umd.js",
   "module": "dist/cube-vue-image-lazy.esm.js",
+  "types": "src/types.d.ts",
   "files": [
     "dist",
+    "src/types.d.ts",
     "src/components/ImageLazy.vue"
   ],
   "scripts": {
